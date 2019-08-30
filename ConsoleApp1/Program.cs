@@ -158,21 +158,31 @@ namespace ConsoleApp1
                 }
 
                 //Logic to determine if group is a letter
-                count = 1;
                 areLetters = true;
                 foreach(List<Point> positions in PositionGroups)
                 {
-                    Console.WriteLine("Second " + count.ToString());
-                    foreach(Point position in positions)
+                    //Check if any points are overlapping
+                    List<Point> loopedPoints = new List<Point>();
+                    foreach (Point position in positions)
                     {
-                        //Console.WriteLine(position.X.ToString() + ", " + position.Y.ToString());
+                        //If point already exists, not letter
+                        if (loopedPoints.Contains(position))
+                        {
+                            areLetters = false;
+                            break;
+                        }
+                        else
+                        {
+                            loopedPoints.Add(position);
+                        }
+                        
                     }
 
-                    if (positions.Count< 5)
+                    if (positions.Count< 5 || !areLetters)
                     {
                         areLetters = false;
+                        break;
                     }
-                    count++;
                 }
 
                 if (areLetters)
@@ -183,7 +193,6 @@ namespace ConsoleApp1
                     {
                         PrintLetters(letter);
                     }
-                    Console.WriteLine("Second " + count.ToString() + " is winner");
                 }
                 
 
